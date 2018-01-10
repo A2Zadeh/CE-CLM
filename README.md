@@ -1,8 +1,6 @@
-For more information on OpenFace, please see [here](https://github.com/TadasBaltrusaitis/OpenFace/)
+# The CE-CLM code will soon be a part of OpenFace 2.0. Please visit [OpenFace Github](https://github.com/TadasBaltrusaitis/OpenFace/) to download the newest OpenFace. 
 
-An extension of OpenFace by Tadas Baltrusaitis with the facial landmark detector and tracking model replaced by Convolutional Experts, Constrained Local Model (CE-CLM).
-
-# Using OpenFace
+# Using CE-CLM
 
 Binaries for Windows are available here:
 
