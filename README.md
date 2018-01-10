@@ -1,6 +1,10 @@
 # The CE-CLM code will soon be a part of OpenFace 2.0. Please visit [OpenFace Github](https://github.com/TadasBaltrusaitis/OpenFace/) to download the newest OpenFace. 
 
 # Using CE-CLM
+The code for CE-CLM published in CVPR 2017. If you use this software for academic purposes please cite the following:
+
+Zadeh, A., Lim, Y. C., Baltrušaitis, T., & Morency, L. P. (2017). Convolutional experts constrained local model for 3d facial landmark detection. In Proceedings of the IEEE International Conference on Computer Vision Workshops (Vol. 7).
+
 
 Binaries for Windows are available here:
 
