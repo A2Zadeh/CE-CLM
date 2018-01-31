@@ -17,6 +17,15 @@ Explanation of how to use the command line binaries can be found [here](https://
 
 **Note:** As the CE-CLM model files are large (total ~1GB), we do not include the files in this release. When the programs are first run, they will offer to download the model files from (here)[http://sorena.multicomp.cs.cmu.edu/cen_patches/]. If you wish to manually download the model files, save the .dat files to `model/patch_experts`.
 
+## Generating patches to train the CEN patch experts
+
+To generate the patches, follow the instructions in patch_generation/.
+
+## Training CEN patch experts
+
+First ensure that you have generated the patches using the scripts in patch_generation/.
+The CEN training script is in cen_training/.
+
 ## From code
 
 This distribution has been tested with Windows 10, using Visual Studio 2015. To compile, open "OpenFace.sln" using Visual Studio 2015 and compile the code. The project was built and tested on Visual Studio 2015, in Windows 10.
