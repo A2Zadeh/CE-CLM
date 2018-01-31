@@ -4,18 +4,18 @@ root = '../data_preparation/prepared_data/';
 
 % which scales we're doing
 sigma = 1;
-num_samples = 10e6;
+num_samples = 5e5;
 
-scales = [0.25,0.35,0.5,1.0];
+scales = [0.25,0.35,0.5];
 frontalView = 1;
 
-profileViewInds = [2,3,4];
+profileViewInds = [];
 
-version = 'general';
-ratio_neg = 10;
+version = 'cofw';
+ratio_neg = 5;
 norm = 1;
 
-data_loc = 'combined_';
+data_loc = 'cofw_';
 rng(0);
 
 % where to save generated patches for external training
