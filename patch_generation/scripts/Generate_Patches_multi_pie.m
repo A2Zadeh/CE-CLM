@@ -20,7 +20,7 @@ rng(0);
 
 % where to save generated patches for external training
 % (e.g. for training CEN patches)
-patches_loc = '/media/bighdd4/YaoChong/patches/';
+patches_loc = './patches/';
 patch_folder = [patches_loc version '/'];
 
 for s=scales
