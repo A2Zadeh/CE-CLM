@@ -28,7 +28,6 @@ Copyright can be found in the copyright.txt
 ./face_validation - A module for validating face detections (training and inference), it is used for tracking in videos so as to know when reinitialisation is needed
 ./PDM_helpers - utility functions that deal with PDM fitting, Jacobians and other shape manipulations
 ./bounding_box_mapping - learning the mapping from face detector bounding box to one suitable for landmark detection initialisation
-./CCNF-landmarks - Provides functions for generating patches to train CEN and other patch experts, and functions for training CCNF patch experts.
 
 //====================== Model Training ===============//
 ./pdm_generation - code for training the Point Distribution Model (PDM)
