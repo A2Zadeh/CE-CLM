@@ -1,6 +1,6 @@
 The code in this folder trains CEN patch experts for use with the CE-CLM
 landmark detector. First generate the patches for training, using the code
-in ../matlab_version/CCNF-landmarks.
+in ../patch_generation.
 
 Each patch expert is trained for a single scale, view and landmark.
 
