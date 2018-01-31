@@ -1,6 +1,6 @@
 function [imgs_used, normalisation_options] = Save_patches(training_loc, view, scale, sigma, ratio_neg, num_samples, patches_loc, view_name, varargin)
 
-    %normalisation_options = Parse_settings( sigma, ratio_neg, num_samples, varargin{:});    
+    % patch generation options
     num_samples = num_samples;
 
     normalisation_options = struct;
@@ -27,27 +27,9 @@ function [imgs_used, normalisation_options] = Save_patches(training_loc, view, s
     
     % location to save generated patches to (for training other patch experts
     % such as CEN)
-%    if (sum(strcmp(varargin, 'save_patches')))
-%        ind = find(strcmp(varargin, 'save_patches')) + 1;
-%        save_patches = varargin{ind};
-%    else
-%        save_patches = false;
-%    end
-
-%    if (sum(strcmp(varargin, 'patches_loc')))
-%    if(sum(strcmp(varargin,'patches_view')))
-%        ind = find(strcmp(varargin,'patches_view')) + 1;
-%        view_name = varargin{ind};
-%    else
-%        view_name = '';
-%    end
-
-%        ind = find(strcmp(varargin, 'patches_loc')) + 1;
-%        patches_loc = varargin{ind};
 
     fprintf('saving patches to %s\n', patches_loc);
     patches_filename = sprintf('data%.2f_%s.mat', scale, view_name);
-%    end
 
     % data_loc should contain landmark_locations, all_images, actual_imgs_used,
     % visiIndex, centres
@@ -58,10 +40,6 @@ function [imgs_used, normalisation_options] = Save_patches(training_loc, view, s
     
     numPoints = size(landmark_loc,2);
     
-%    correlations = zeros(1, numPoints);
-%    rmsErrors = zeros(1, numPoints);
-%    patchExperts = cell(1, numPoints);    
-
     done = zeros(1, numPoints);
     
     for j=1:numPoints
@@ -90,23 +68,8 @@ function [imgs_used, normalisation_options] = Save_patches(training_loc, view, s
 
             if (mirror_idx ~= j & done(1, mirror_idx) ~= 0)
 
-%                correlations(1,j) = correlations(1,mirror_idx);
-%                rmsErrors(1, j) = rmsErrors(1,mirror_idx);
-%                patchExperts{1, j} = patchExperts{1,mirror_idx};
-
                 fprintf('not generating patches for lm %d, mirrored by %d\n', j, mirror_idx);
                 done(1, j) = done(1, mirror_idx);
-
-%                num_hl = size(patchExperts{1,mirror_idx}.thetas, 1);
-%                num_mod = size(patchExperts{1,mirror_idx}.thetas, 3);
-%                for m=1:num_mod
-%                    for hl=1:num_hl
-%                        w = reshape(patchExperts{1,mirror_idx}.thetas(hl, 2:end, m),11,11);
-%                        w = fliplr(w);
-%                        w = reshape(w, 121,1);
-%                        patchExperts{1, j}.thetas(hl, 2:end, m) = w;
-%                    end
-%                end
 
                 fprintf('Feature %d done\n', j);
 
@@ -120,7 +83,6 @@ function [imgs_used, normalisation_options] = Save_patches(training_loc, view, s
             
             tic;
             % instead of loading the patches compute them here:
-            %num_samples = normalisation_options.numSamples;
 
             [samples, labels, unnormed_samples, imgs_used_n] = ExtractTrainingSamples(examples, landmark_loc, actual_imgs_used, sigma, num_samples, j, normalisation_options);
             imgs_used = union(imgs_used, imgs_used_n);
@@ -149,45 +111,6 @@ function [imgs_used, normalisation_options] = Save_patches(training_loc, view, s
             
             filename = sprintf([patches_loc '/%s/' patches_filename], num2str(j));
             save(filename, 'samples_train', 'labels_train', 'samples_test', 'labels_test', '-v7.3');
-
-%            % Set up the patch expert
-%            similarity_types = normalisation_options.similarity_types;    
-%            patch_expert.similarity_types = similarity_types;
-%            patch_expert.sparsity = normalisation_options.sparsity;
-%            patch_expert.sparsity_types = normalisation_options.sparsity_types;
-%            patch_expert.patch_expert_type = 'CCNF';
-%                        
-%            % The actual regressor training
-%            [alpha, betas, thetas, similarities, sparsities] = Create_CCNF_Regressor(samples_train, labels_train, region_length, similarity_types, normalisation_options.sparsity_types, normalisation_options);
-%
-%            % The learned patch expert
-%            patch_expert.alphas = alpha;
-%            patch_expert.betas = betas;
-%            patch_expert.thetas = thetas;
-%
-%
-%            % if we have a SigmaInv, we don't need betas anymore (or
-%            % similarity and sparsity functions for that matter), compute
-%            % in a single sample for efficiency
-%            [ ~, ~, Precalc_Bs_flat, ~ ] = CalculateSimilarities( 1, zeros(size(samples,1),region_length), similarities, sparsities, labels_train(1:region_length), true);
-%            Precalc_B_flat = Precalc_Bs_flat{1};
-%            SigmaInv = CalcSigmaCCNFflat(patch_expert.alphas, patch_expert.betas, region_length, Precalc_B_flat, eye(region_length), zeros(region_length));
-%            patch_expert.SigmaInv = SigmaInv;
-%
-%            % Evaluate the patch expert
-%            [rmsError, corr,~] = EvaluatePatchExpert(samples_test, labels_test, alpha, betas, thetas, similarities, sparsities, normalisation_options, region_length);
-%
-%            fprintf('Rms error %.3f, correlation %.3f\n', rmsError, corr);
-%
-%            % Assert that our normalisation and different fitting are equivalent
-%%             normed_samples = samples(:,1:size(unnormed_samples,1)*region_length);
-%%             [~, ~, responses_ccnf] = EvaluatePatchExpert(normed_samples, labels(1:size(unnormed_samples,1)*region_length), alpha, betas, thetas, similarities, sparsities, normalisation_options, region_length);
-%%             [responses_ccnf_ncc] = CCNF_ncc_response(unnormed_samples, patch_expert, normalisation_options, normalisation_options.normalisationRegion, region_length);
-%%             assert(norm(responses_ccnf-responses_ccnf_ncc)< 10e-1);
-%
-%            correlations(1,j) = corr;
-%            rmsErrors(1, j) = rmsError;
-%            patchExperts{1, j} = patch_expert(:);
 
             done(1, j) = 1;
 
