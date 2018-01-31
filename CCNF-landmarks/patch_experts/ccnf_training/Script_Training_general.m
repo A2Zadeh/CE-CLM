@@ -30,8 +30,9 @@ num_layers = 7;
 
 % whether to save generated patches for external training
 % (e.g. for training CEN patches)
-save_patches = true;
+save_patches = false;
 patches_loc = '../../../../patches/';
+patches_loc = '/media/bighdd4/YaoChong/patches/';
 
 for s=scales
 
