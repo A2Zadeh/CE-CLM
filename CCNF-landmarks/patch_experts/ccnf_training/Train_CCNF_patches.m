@@ -125,14 +125,6 @@ function [correlations, rmsErrors, patchExperts, visiIndex, centres, imgs_used, 
                 save(patches_loc, 'samples_train', 'labels_train', 'samples_test', 'labels_test', '-v7.3');
             end
 
-%            %Amir addition to the code for theano stuff
-%            % TODO: take argument for the path
-%            amirpath=sprintf(['/media/bighdd/Amir/Data/Facial_Landmark_Data/DCCNF/general/%s/data%.2f_%s.mat'], num2str(j),scale,myname);
-%            
-%            save(amirpath,'samples_train','labels_train','samples_test','labels_test','-v7.3')          
-%            disp(amirpath)
-            
-
             % Set up the patch expert
             similarity_types = normalisation_options.similarity_types;    
             patch_expert.similarity_types = similarity_types;
