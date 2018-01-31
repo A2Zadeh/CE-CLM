@@ -15,7 +15,7 @@ function [correlations, rmsErrors, patchExperts, visiIndex, centres, imgs_used, 
     % location to save generated patches to (for training other patch experts
     % such as CEN)
     if (sum(strcmp(varargin, 'save_patches')))
-        ind = find(strcmp(varargin, 'save_patches)) + 1;
+        ind = find(strcmp(varargin, 'save_patches')) + 1;
         save_patches = varargin{ind};
     else
         save_patches = false;
@@ -31,7 +31,6 @@ function [correlations, rmsErrors, patchExperts, visiIndex, centres, imgs_used, 
 
         ind = find(strcmp(varargin, 'patches_loc')) + 1;
         patches_loc = varargin{ind};
-        patches_loc = sprintf([data_loc '/%s/data%.2f_%s.mat'], num2str(j), scale, view_name);
     end
 
     load(data_loc);
@@ -65,8 +64,16 @@ function [correlations, rmsErrors, patchExperts, visiIndex, centres, imgs_used, 
                 mirror_idx = mirrorInds(mirrorInds(:,2)==j,1);
             end
 
-            if(mirror_idx~=j & correlations(1,mirror_idx) ~= 0)
+            if (mirror_idx ~= j)
+                disp('mirror');
+            end
 
+            if (mirror_idx ~= j & correlations(1, mirror_idx) == 1)
+                disp('mirrored but not known');
+            end
+
+            if(mirror_idx~=j & correlations(1,mirror_idx) ~= 0)
+                disp('mirrored and known');
                 correlations(1,j) = correlations(1,mirror_idx);
                 rmsErrors(1, j) = rmsErrors(1,mirror_idx);
                 patchExperts{1, j} = patchExperts{1,mirror_idx};
@@ -122,7 +129,8 @@ function [correlations, rmsErrors, patchExperts, visiIndex, centres, imgs_used, 
             labels_test = labels(test_start:test_end);
             
             if (save_patches)
-                save(patches_loc, 'samples_train', 'labels_train', 'samples_test', 'labels_test', '-v7.3');
+                disp('hi');
+                %save(patches_loc, 'samples_train', 'labels_train', 'samples_test', 'labels_test', '-v7.3');
             end
 
             % Set up the patch expert
