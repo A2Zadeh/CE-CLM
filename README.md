@@ -1,4 +1,4 @@
-# The CE-CLM code is now a part of OpenFace 2.0. Please visit [OpenFace Github](https://github.com/TadasBaltrusaitis/OpenFace/) to download the newest OpenFace. This repository will no longer be maintained. 
+# The CE-CLM algorithm is now a core part of OpenFace 2.0. Please visit [OpenFace Github](https://github.com/TadasBaltrusaitis/OpenFace/). CE-CLM will only be maintained as part of OpenFace 2.0 and is not maintained here. 
 
 # Using CE-CLM
 The code for CE-CLM published in CVPR 2017. If you use this software for academic purposes please cite the following:
